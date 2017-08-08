@@ -21,13 +21,16 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
-
-
-
-
-
-
-
+% 添加X0
+X = [ones(m,1) X];
+% 计算第二层（隐藏层）的值
+z2 = X*Theta1';
+a2 = sigmoid(z2);
+a2 = [ones(m,1) a2];
+% 计算第三层（输出层）的值
+z3 = a2*Theta2';
+a3 = sigmoid(z3);
+[tmp p] = max(a3, [], 2);
 
 % =========================================================================
 
