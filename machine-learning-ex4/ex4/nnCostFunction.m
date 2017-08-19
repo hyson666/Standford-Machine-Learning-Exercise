@@ -100,17 +100,18 @@ for t = 1:m
     % 计算隐藏层误差
     delta_2 = Theta2' * delta_3 .* sigmoidGradient([1;Theta1*a_1]) ;
     % 逐步修正Delta的值，第二层隐藏层存在bias，输出层不存在
-    Theta1_grad = Theta1_grad + delta_2(2:end) * a_1';
+    Theta1_grad = Theta1_grad + delta_2(2:end,:) * a_1';
     % 这一层是没有bias的
     Theta2_grad = Theta2_grad + delta_3 * a_2';
 endfor
 
-Theta1_grad = Theta1_grad/m;
-Theta2_grad = Theta2_grad/m;
-
-    
-
-
+% 正则化处理
+Regular2 = lambda * Theta2 / m;
+Regular2(:,1) = 0;
+Regular1 = lambda * Theta1 / m;
+Regular1(:,1) = 0;
+Theta1_grad = Theta1_grad/m + Regular1;
+Theta2_grad = Theta2_grad/m + Regular2;
 
 % =========================================================================
 
